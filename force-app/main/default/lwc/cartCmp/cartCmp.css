@@ -1,0 +1,27 @@
+div {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 800px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+p {
+    font-size: 1rem;
+    color: #555;
+    margin: 10px 0;
+}
+
+.lightning-button {
+    margin-top: 20px;
+    display: block;
+    text-align: center;
+}

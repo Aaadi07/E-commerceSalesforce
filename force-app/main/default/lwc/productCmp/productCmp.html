@@ -1,0 +1,148 @@
+<template>
+    <lightning-tabset active-tab-value={activeTab} onactive={handleTabChange}>
+  
+        <lightning-tab label="Products" value="Products">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-heading">E-Commerce</h1>
+
+                    <div class="slds-grid slds-wrap slds-grid_align-center">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12">
+                            <lightning-input 
+                                label="Enter Your Search Item" 
+                                placeholder="Enter Product For Search" 
+                                onchange={handleSearch} 
+                                variant="label-hidden" 
+                                type="search"> 
+                            </lightning-input>
+                        </div>
+
+                        <!-- <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                            <lightning-button 
+                                label="Search Products" 
+                                variant="destructive" 
+                                onclick={handleSearchClick}>
+                            </lightning-button>
+                        </div>  -->
+                    </div>
+                </div>
+            </div>
+                <lightning-card>
+                    <c-child-component 
+                        products={filteredProducts} 
+                        onaddtocart={handleAddToCart}>
+                    </c-child-component>
+    </lightning-card>
+</lightning-tab>
+
+        <lightning-tab label="Cart" value="Cart">
+            <lightning-card>
+            <div class="cart-section">
+                <template if:true={cartItems.length}>
+                    <div class="slds-grid slds-wrap slds-grid_align-center">
+                        <template for:each={cartItems} for:item="item">
+                            <div key={item.Id} class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-box slds-m-around_small cart-card">
+                                <img src={item.Image__c} alt={item.Name} class="cart-image"/>
+                                <h3 class="cart-title slds-m-around_medium">{item.Name}</h3>
+                                <p class="cart-price slds-m-around_medium">Price: ${item.Price__c}</p>
+                            </div>
+                        </template>
+                    </div>
+                    <h2>Total Price: ${totalPrice}</h2>
+                    <lightning-button label="Proceed to Payment" variant="brand" onclick={handlePayment}></lightning-button>
+                </template>
+                <template if:false={cartItems.length}>
+                    <p>Your cart is empty.</p>
+                </template>
+            </div>
+            </lightning-card>
+        </lightning-tab>
+    </lightning-tabset>
+
+ 
+     
+    <template if:true={isPaymentModalOpen}>
+        <section  class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closePaymentModal}>
+                        <lightning-icon icon-name="utility:close" size="small" alternative-text="close" class="slds-button__icon slds-button__icon_large"></lightning-icon>
+                    </button>
+                    <h2 class="slds-text-heading_medium">Select Payment Method</h2>
+                </header>
+<lightning-card>
+
+<div class="slds-modal__content slds-p-around_medium">
+<div class="slds-grid slds-wrap slds-align_absolute-center">
+    <div>
+         <img src={phonepayUrl} alt="PhonePe"
+            style="width: 100px; height: auto; cursor: pointer;" 
+            onclick={handlePaymentMethodSelection} />
+    </div>
+    <div>
+        <img src={googlepayUrl} alt="Googlepay" 
+        style="width: 100px; height: auto; cursor: pointer;" 
+        onclick={handlePaymentMethodSelection}/>
+    </div>
+    <div>
+        <img src={paytmUrl} alt="Paytm" 
+        style="width: 100px; height: auto; cursor: pointer;" 
+        onclick={handlePaymentMethodSelection}/>
+    </div>
+</div>
+</div>
+
+<template if:true={isPaymentDetailsVisible}>
+    <form class="slds-form slds-p-around_medium">
+
+  <lightning-input 
+    label="Name" 
+    data-field="name" 
+    value={name} 
+    onblur={handleInputChange} 
+    placeholder="Enter Account Holder Name" 
+    required>
+</lightning-input>
+
+<lightning-input 
+    label="Card Number" 
+    data-field="cardNumber" 
+    value={cardNumber} 
+    onblur={handleInputChange} 
+    placeholder="Enter your card number" 
+    required>
+</lightning-input>
+
+<lightning-input 
+    label="Expiry Date" 
+    data-field="expiryDate" 
+    value={expiryDate} 
+    onblur={handleInputChange} 
+    placeholder="MM/YY" 
+    required>
+</lightning-input>
+
+<lightning-input 
+    label="CVV" 
+    data-field="cvv" 
+    value={cvv} 
+    onblur={handleInputChange} 
+    placeholder="Enter CVV" 
+    required>
+</lightning-input>
+
+
+</form>
+</template>
+            
+<footer class="slds-modal__footer">
+        <lightning-button variant="neutral" label="Cancel" class="slds-m-right_small"   onclick={closePaymentModal}></lightning-button>
+        <lightning-button variant="brand" label="Submit Payment" onclick={submitPayment}>
+        </lightning-button>
+</footer>
+</lightning-card>
+</div>
+</section>
+<div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+</template>

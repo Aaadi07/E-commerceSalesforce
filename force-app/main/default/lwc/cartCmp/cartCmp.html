@@ -1,0 +1,16 @@
+<template>
+    <div>
+        <h1>Your Cart</h1>
+        <template if:true={cartItems}>
+            <template for:each={cartItems} for:item="item">
+                <div key={item.productId}>
+                    <p>{item.productName} - Quantity: {item.quantity}</p>
+                </div>
+            </template>
+            <lightning-button claas="slds-align_absolute-center" label="Proceed to Payment" variant="brand" onclick={proceedToPayment}></lightning-button>
+        </template>
+        <template if:false={cartItems}>
+            <p>Your cart is empty.</p>
+        </template>
+    </div>
+</template>

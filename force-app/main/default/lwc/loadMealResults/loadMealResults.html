@@ -1,0 +1,16 @@
+<template>
+    <template lwc:if={checkMeals}>
+          <template lwc:if={showModal}>
+            <c-recepie-modal selected-meal ={selectedMeal} onclosemodal= {closeHandler}></c-recepie-modal>
+        </template> 
+      <lightning-card>
+            <div class="slds-grid slds-wrap">
+                <template for:each={mealResult} for:item="meal">
+                <div key={meal.idMeal} class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+                    <c-meal-tile-cmp meal={meal} onrecepie = {recepieHandler}></c-meal-tile-cmp>
+                </div>
+            </template>
+            </div>
+        </lightning-card>
+        </template> 
+</template>

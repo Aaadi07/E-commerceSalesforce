@@ -1,0 +1,25 @@
+<template>
+    <template if:true={products}>
+        <div class="slds-grid slds-wrap slds-grid_align-center slds-m-top_medium">
+            <template for:each={products} for:item="product">
+                <div key={product.Id} class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-box slds-m-around_small product-card">
+                    <img src={product.Image__c} alt={product.Name} class="product-image"/>
+                    <h3 class="product-title slds-m-around_medium">{product.Name}</h3>
+                    <p class="product-id slds-m-around_medium">ID: {product.External_Id__c}</p>
+                    <p class="product-price slds-m-around_medium">Price: ${product.Price__c}</p>
+                    <p class="product-description slds-m-around_medium">{product.Description__c}</p>
+                   <lightning-button 
+                        label="Add to Cart" 
+                        onclick={handleAddToCart} 
+                        data-id={product.External_Id__c}>
+                    </lightning-button>
+
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <template if:true={noResults}>
+        <p>No products found.</p>
+    </template>
+</template>
